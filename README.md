@@ -23,6 +23,7 @@ MONGOURL="Insert Your MongoDB URL"
 ## Step 3: Installing Backend Dependencies
 
 In your terminal, navigate to the "Backend" folder and run the following command to download all the dependencies:
+npm install
 
 This command will download all the dependencies required for the backend.
 
