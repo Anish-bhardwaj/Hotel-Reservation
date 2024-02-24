@@ -84,6 +84,9 @@ nav .hamburger {
 nav svg {
   font-size: 1.75rem;
 }
+#submitBtn{
+  cursor: pointer;
+}
 @media (max-width: 1520px) {
   nav {
     min-width: 100%;
