@@ -72,7 +72,7 @@ const Reservation = () => {
       if(!validateData()){
         try {
           const { data } = await axios.post(
-            "http://localhost:4000/api/v1/reserve",
+            "https://hotel-reservation-zc54.onrender.com/api/v1/reserve",
             { firstName, lastName, email, phone, date, time },
             {
               headers: {
