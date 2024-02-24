@@ -43,3 +43,6 @@ npm install
 ## Step 6: Running the Frontend Server
 After installing dependencies, still in the "Frontend" folder, run the following command to start the frontend development server:
 npm run dev
+
+
+### Live demo at https://hotel-reservation-demo.vercel.app/
