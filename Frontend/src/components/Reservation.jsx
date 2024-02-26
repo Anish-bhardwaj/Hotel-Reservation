@@ -66,8 +66,9 @@ const Reservation = () => {
     return err;
 }
   const handleReservation = async (e) => {
+    
     e.preventDefault();
-
+    e.target.style.cursor="progress";
 //VALIDATION
       if(!validateData()){
         try {
