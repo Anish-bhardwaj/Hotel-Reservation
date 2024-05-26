@@ -11,6 +11,7 @@ exports.reserve=async (req,res)=>{
     }catch(err){
         res.status(500).json({
             message:"Internal Server Error",
+            data:err
             
         }); 
     }
