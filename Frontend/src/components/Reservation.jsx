@@ -13,89 +13,74 @@ const Reservation = () => {
   const [time, setTime] = useState("");
   const [phone, setPhone] = useState(null);
   const navigate = useNavigate();
-  
-  function validateData(){
-    let err=false;
-    
-      if(firstName.length <3){
-          toast.error("First Name Must Be  At Least 3 Characters Long!");
-          err=true;
-      } else if( firstName.length >25){
-        toast.error("First Name  Can Not Contain More Than 25 Characters!");
-        err=true;
-      }
-      if(lastName.length <3){
-        toast.error("Last Name Must Be  At Least 3 Characters Long!");
-        err=true;
-      } else if( lastName.length >25){
+
+  function validateData() {
+    let err = false;
+
+    if (firstName.length < 3) {
+      toast.error("First Name Must Be  At Least 3 Characters Long!");
+      err = true;
+    } else if (firstName.length > 25) {
+      toast.error("First Name  Can Not Contain More Than 25 Characters!");
+      err = true;
+    }
+    if (lastName.length < 3) {
+      toast.error("Last Name Must Be  At Least 3 Characters Long!");
+      err = true;
+    } else if (lastName.length > 25) {
       toast.error("Last Name  Can Not Contain More Than 25 Characters!");
-      err=true;
+      err = true;
     }
-    if(phone.length!=10){
+    if (phone.length != 10) {
       toast.error("Phone Number Must Contains 10 Digits");
-      err=true;
+      err = true;
     }
-    let emailexp=/^([a-z A-Z 0-9 \ . _]+)@([a-z A-Z 0-9]+)(\.[a-z A-Z]+)(\.[a-z A-Z]+)?$/;
-    if(!(emailexp.test(email))){
+    let emailexp = /^([a-z A-Z 0-9 \ . _]+)@([a-z A-Z 0-9]+)(\.[a-z A-Z]+)(\.[a-z A-Z]+)?$/;
+    if (!(emailexp.test(email))) {
       toast.error("Email is wrong");
-      err=true;
+      err = true;
     }
 
-    let data=new Date();
-    let date2= data.getYear()+1900;
-    date2+="-"
-    date2+=(data.getMonth()+1)<10?"0"+(data.getMonth()+1):data.getMonth()+1;
-    date2+="-"
-    date2+=data.getDate();
-    
-    if((date2>date)){
-      toast.error("Select Future Dates Only");
-      err=true;
-    }else if(date2===date){
-      let time2=(data.getHours())<10?"0"+(data.getHours()):(data.getHours());
-      time2+="-";
-      time2+=(data.getMinutes())<10?"0"+(data.getMinutes()):(data.getMinutes());
-      
-      if(time2>=time){
-        toast.error("Please Select Time and Date For Future");
-        err=true;
-      }
-      
+    let now = new Date();
+    let selected = new Date(date + "T" + time); // e.g. "2025-11-05T10:00"
+
+    if (selected <= now) {
+      toast.error("Please select a future date and time");
+      err = true;
     }
 
     return err;
-}
+  }
   const handleReservation = async (e) => {
-    
     e.preventDefault();
-    e.target.style.cursor="progress";
-//VALIDATION
-      if(!validateData()){
-        try {
-          const { data } = await axios.post(
-            "https://hotel-reservation-zc54.onrender.com/api/v1/reserve",
-            { firstName, lastName, email, phone, date, time },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-              
-            }
-          );
-          toast.success(data.message);
-          setFirstName("");
-          setLastName("");
-          setPhone(0);
-          setEmail("");
-          setTime("");
-          setDate("");
-          navigate("/success");
-        } catch (error) {
-          toast.error(error.response.data.message);
-        }
-      }
+    e.target.style.cursor = "progress";
+    //VALIDATION
+    if (!validateData()) {
+      try {
+        const { data } = await axios.post(
+          "https://hotel-reservation-zc54.onrender.com/api/v1/reserve",
+          { firstName, lastName, email, phone, date, time },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
 
-    
+          }
+        );
+        toast.success(data.message);
+        setFirstName("");
+        setLastName("");
+        setPhone(0);
+        setEmail("");
+        setTime("");
+        setDate("");
+        navigate("/success");
+      } catch (error) {
+        toast.error(error.response.data.message);
+      }
+    }
+
+
   };
 
   return (
